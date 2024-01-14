@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieBooking.Api", "MovieBooking.Api\MovieBooking.Api.csproj", "{7E704CDF-9093-45E8-AF0B-CFFA5664F0B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieBooking.TicketBooking", "MovieBooking.TicketBooking\MovieBooking.TicketBooking.csproj", "{31E6ADB2-5AA3-402E-8442-F40EEC673425}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieBooking.ShowManagement", "MovieBooking.ShowManagement\MovieBooking.ShowManagement.csproj", "{C4E5658A-FCE7-42F0-BC8F-B1D34ED8E5E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieBooking.Core", "MovieBooking.Core\MovieBooking.Core.csproj", "{F766770A-CAEC-477C-94FF-8714D546F457}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E704CDF-9093-45E8-AF0B-CFFA5664F0B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E704CDF-9093-45E8-AF0B-CFFA5664F0B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E704CDF-9093-45E8-AF0B-CFFA5664F0B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E704CDF-9093-45E8-AF0B-CFFA5664F0B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31E6ADB2-5AA3-402E-8442-F40EEC673425}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31E6ADB2-5AA3-402E-8442-F40EEC673425}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31E6ADB2-5AA3-402E-8442-F40EEC673425}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31E6ADB2-5AA3-402E-8442-F40EEC673425}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4E5658A-FCE7-42F0-BC8F-B1D34ED8E5E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4E5658A-FCE7-42F0-BC8F-B1D34ED8E5E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4E5658A-FCE7-42F0-BC8F-B1D34ED8E5E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4E5658A-FCE7-42F0-BC8F-B1D34ED8E5E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F766770A-CAEC-477C-94FF-8714D546F457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F766770A-CAEC-477C-94FF-8714D546F457}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F766770A-CAEC-477C-94FF-8714D546F457}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F766770A-CAEC-477C-94FF-8714D546F457}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
