@@ -9,6 +9,7 @@ public class Startup(IConfiguration configuration)
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddControllers();
         services.ConfigureCoreServices(_configuration);
     }
 
@@ -19,14 +20,5 @@ public class Startup(IConfiguration configuration)
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MovieBooking.Api v1"));
         }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers();
-        });
     }
 }

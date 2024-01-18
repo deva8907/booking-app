@@ -11,6 +11,6 @@ namespace MovieBooking.Core
 
         [BsonElement("Name")]
         [BsonRequired]
-        public string Name { get; set; }
+        public required string Name { get; set; }
     }
 }
