@@ -65,16 +65,6 @@ class DatabaseSeeder(IMongoClient mongoClient, IOptions<MongoDbSettings> mongoDb
             {
                 await movieCollection.InsertOneAsync(movie);
             }
-            else
-            { 
-                var existingMovie = existingMovies.FirstOrDefault(x => x.Name == movie.Name);
-                if (existingMovie != null && string.IsNullOrEmpty(existingMovie.MovieId))
-                {
-                    var filter = Builders<Movie>.Filter.Eq(x => x.Name, movie.Name);
-                    var update = Builders<Movie>.Update.Set(x => x.MovieId, movie.MovieId);
-                    await movieCollection.UpdateOneAsync(filter, update);
-                }
-            }
         }
     }
 
@@ -94,18 +84,6 @@ class DatabaseSeeder(IMongoClient mongoClient, IOptions<MongoDbSettings> mongoDb
             {
                 await cinemaCollection.InsertOneAsync(cinema);
             }
-            else
-            {
-                var existingCinema = existingCinemas.FirstOrDefault(x => x.Name == cinema.Name && x.City == cinema.City);
-                if (existingCinema != null && string.IsNullOrEmpty(existingCinema.CinemaId))
-                {
-                    var filter = Builders<Cinema>.Filter.And(
-                        Builders<Cinema>.Filter.Eq(x => x.Name, cinema.Name),
-                        Builders<Cinema>.Filter.Eq(x => x.City, cinema.City));
-                    var update = Builders<Cinema>.Update.Set(x => x.CinemaId, cinema.CinemaId);
-                    await cinemaCollection.UpdateOneAsync(filter, update);
-                }
-            }
         }
     }
 
@@ -113,9 +91,9 @@ class DatabaseSeeder(IMongoClient mongoClient, IOptions<MongoDbSettings> mongoDb
     {
         List<City> cities =
         [
-            new() { Name = "Chennai" },
-            new() { Name = "Mumbai" },
-            new () { Name = "Bangalore"}
+            new() { Name = "Chennai", CityId = Guid.NewGuid().ToString() },
+            new() { Name = "Mumbai", CityId = Guid.NewGuid().ToString() },
+            new () { Name = "Bangalore", CityId = Guid.NewGuid().ToString()}
         ];
         var cityCollection = _database.GetCollection<City>("cities");
         var existingCities = cityCollection.Find(Builders<City>.Filter.Empty).ToList();

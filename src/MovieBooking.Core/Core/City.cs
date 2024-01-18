@@ -9,6 +9,10 @@ namespace MovieBooking.Core
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
 
+        [BsonElement("CityId")]
+        [BsonRequired]
+        public required string CityId { get; set; }
+
         [BsonElement("Name")]
         [BsonRequired]
         public required string Name { get; set; }
