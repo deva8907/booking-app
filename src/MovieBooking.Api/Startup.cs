@@ -10,6 +10,7 @@ public class Startup(IConfiguration configuration)
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
+        services.AddSwaggerGen();
         services.ConfigureCoreServices(_configuration);
     }
 

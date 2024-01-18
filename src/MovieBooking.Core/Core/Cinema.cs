@@ -8,6 +8,10 @@ public class Cinema
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
+    
+    [BsonElement("CinemaId")]
+    [BsonRequired]
+    public required string CinemaId { get; set; }
 
     [BsonElement("Name")]
     [BsonRequired]

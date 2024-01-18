@@ -9,6 +9,10 @@ public class Movie
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
 
+    [BsonElement("MovieId")]
+    [BsonRequired]
+    public required string MovieId { get; set; }
+
     [BsonElement("Name")]
     [BsonRequired]
     public required string Name { get; set; }
