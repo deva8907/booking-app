@@ -20,4 +20,8 @@ public class Cinema
     [BsonElement("City")]
     [BsonRequired]
     public required string City { get; set; }
+
+    [BsonElement("Screens")]
+    [BsonRequired]
+    public required List<Screen> Screens { get; set; }
 }

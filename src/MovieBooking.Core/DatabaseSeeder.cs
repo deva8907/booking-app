@@ -72,9 +72,27 @@ class DatabaseSeeder(IMongoClient mongoClient, IOptions<MongoDbSettings> mongoDb
     {
         List<Cinema> cinemas =
         [
-            new() { Name = "PVR", City = "Chennai", CinemaId = Guid.NewGuid().ToString() },
-            new() { Name = "PVR", City = "Mumbai", CinemaId = Guid.NewGuid().ToString() },
-            new() { Name = "PVR", City = "Bangalore", CinemaId = Guid.NewGuid().ToString() },
+            new() { Name = "PVR", City = "Chennai", CinemaId = Guid.NewGuid().ToString(),
+                Screens =
+                [
+                    new() { Name = "Screen 1", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
+                    new() { Name = "Screen 2", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
+                    new() { Name = "Screen 3", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
+                ] },
+            new() { Name = "PVR", City = "Mumbai", CinemaId = Guid.NewGuid().ToString(),
+                Screens =
+                [
+                    new() { Name = "Screen 1", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
+                    new() { Name = "Screen 2", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
+                    new() { Name = "Screen 3", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
+                ] },
+            new() { Name = "PVR", City = "Bangalore", CinemaId = Guid.NewGuid().ToString(),
+                Screens =
+                [
+                    new() { Name = "Screen 1", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
+                    new() { Name = "Screen 2", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
+                    new() { Name = "Screen 3", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
+                ] }
         ];
         var cinemaCollection = _database.GetCollection<Cinema>("cinemas");
         var existingCinemas = cinemaCollection.Find(Builders<Cinema>.Filter.Empty).ToList();
