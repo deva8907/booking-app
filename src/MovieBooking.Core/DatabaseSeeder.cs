@@ -23,7 +23,7 @@ class DatabaseSeeder(IMongoClient mongoClient, IOptions<MongoDbSettings> mongoDb
 
     private void CreateUniqueConstraintForMovies()
     {
-        var movieCollection = _database.GetCollection<Movie>("movies");
+        var movieCollection = _database.GetCollection<Movie>(DBCollections.MOVIES);
         var indexes = movieCollection.Indexes.List().ToList();
         var uniqueNameIndexExists = indexes.Any(index => index["key"].AsBsonDocument.Contains("MovieId") && index["unique"].AsBoolean);
         if (!uniqueNameIndexExists)
@@ -36,7 +36,7 @@ class DatabaseSeeder(IMongoClient mongoClient, IOptions<MongoDbSettings> mongoDb
     }
     private void CreateUniqueConstraintForCinemas()
     {
-        var cinemaCollection = _database.GetCollection<Cinema>("cinemas");
+        var cinemaCollection = _database.GetCollection<Cinema>(DBCollections.CINEMAS);
         var indexes = cinemaCollection.Indexes.List().ToList();
         var uniqueNameIndexExists = indexes.Any(index => index["key"].AsBsonDocument.Contains("CinemaId") && index["unique"].AsBoolean);
         if (!uniqueNameIndexExists)
@@ -57,7 +57,7 @@ class DatabaseSeeder(IMongoClient mongoClient, IOptions<MongoDbSettings> mongoDb
             new() { Name = "The Dark Knight", RuntimeMinutes = 152, PlotSummary = "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", MovieId = Guid.NewGuid().ToString() },
             new() { Name = "The Godfather: Part II", RuntimeMinutes = 202, PlotSummary = "The early life and career of Vito Corleone in 1920s New York City is portrayed, while his son, Michael, expands and tightens his grip on the family crime syndicate.", MovieId = Guid.NewGuid().ToString() },
         ];
-        var movieCollection = _database.GetCollection<Movie>("movies");
+        var movieCollection = _database.GetCollection<Movie>(DBCollections.MOVIES);
         var existingMovies = movieCollection.Find(Builders<Movie>.Filter.Empty).ToList();
         foreach (var movie in movies)
         {
@@ -94,7 +94,7 @@ class DatabaseSeeder(IMongoClient mongoClient, IOptions<MongoDbSettings> mongoDb
                     new() { Name = "Screen 3", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
                 ] }
         ];
-        var cinemaCollection = _database.GetCollection<Cinema>("cinemas");
+        var cinemaCollection = _database.GetCollection<Cinema>(DBCollections.CINEMAS);
         var existingCinemas = cinemaCollection.Find(Builders<Cinema>.Filter.Empty).ToList();
         foreach (var cinema in cinemas)
         {
@@ -113,7 +113,7 @@ class DatabaseSeeder(IMongoClient mongoClient, IOptions<MongoDbSettings> mongoDb
             new() { Name = "Mumbai", CityId = Guid.NewGuid().ToString() },
             new () { Name = "Bangalore", CityId = Guid.NewGuid().ToString()}
         ];
-        var cityCollection = _database.GetCollection<City>("cities");
+        var cityCollection = _database.GetCollection<City>(DBCollections.CITIES);
         var existingCities = cityCollection.Find(Builders<City>.Filter.Empty).ToList();
         foreach (var city in cities)
         {
