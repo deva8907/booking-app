@@ -21,5 +21,16 @@ public class Startup(IConfiguration configuration)
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MovieBooking.Api v1"));
         }
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
+
+        app.UseRouting();
+
+        app.UseEndpoints(endpoints =>
+                         {
+                             endpoints.MapControllerRoute(
+                                 name: "default",
+                                 pattern: "{controller=Home}/{action=Index}/{id?}");
+                         });
     }
 }

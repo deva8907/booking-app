@@ -17,5 +17,9 @@ public static class Configure
             return new MongoClient(mongoDbSettings.ConnectionString);
         });
         services.AddHostedService<DatabaseSeeder>();
+        services.AddScoped<IMovieRepository, MovieRepository>();
+        services.AddScoped<ICinemaRepository, CinemaRepository>();
+        services.AddScoped<IMovieShowRepository, MovieShowRepository>();
+        services.AddScoped<MovieShowService>();
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace MovieBooking.Core;
 
-public record MovieShowDto
+public record MovieShowResponse
 {
     public required string ShowId { get; set; }
     public required string Cinema { get; set; }

@@ -29,25 +29,25 @@ public class MovieShow
     [BsonRequired]
     public required string MovieId { get; set; }
 
-    public static async Task<MovieShow> CreateMovieShow(string cinemaId, string screenId, DateTimeOffset showTime, string movieId, ICinemaRepository cinemaRepository,
+    public static async Task<MovieShow> CreateMovieShow(CreateMovieShowRequest request, ICinemaRepository cinemaRepository,
         IMovieRepository movieRepository)
     {
-        var cinema = await cinemaRepository.GetCinemaById(cinemaId) ??
-         throw new MovieShowException($"Cinema with id {cinemaId} does not exist");
+        var cinema = await cinemaRepository.GetCinemaById(request.CinemaId) ??
+         throw new MovieShowException($"Cinema {request.CinemaId} does not exist");
 
-        var screen = cinema.Screens.FirstOrDefault(screen => screen.ScreenId == screenId) ??
-         throw new MovieShowException($"Screen with id {screenId} does not exist in cinema {cinema.Name}");
+        var screen = cinema.Screens.FirstOrDefault(screen => screen.Name == request.Screen) ??
+         throw new MovieShowException($"Screen with {request.Screen} does not exist in cinema {cinema.Name}");
 
-        var movie = await movieRepository.GetMovieById(movieId) ?? throw new MovieShowException($"Movie with id {movieId} does not exist");
+        var movie = await movieRepository.GetMovieById(request.MovieId) ?? throw new MovieShowException($"Movie with id {request.MovieId} does not exist");
 
-        if (showTime < DateTime.UtcNow)
-            throw new MovieShowException($"Show time {showTime} cannot be in the past");
+        if (request.ShowTime < DateTime.UtcNow)
+            throw new MovieShowException($"Show time {request.ShowTime} cannot be in the past");
         return new MovieShow
         {
             ShowId = Guid.NewGuid().ToString(),
-            CinemaId = cinemaId,
+            CinemaId = request.CinemaId,
             ScreenId = screen.ScreenId,
-            ShowTime = showTime,
+            ShowTime = request.ShowTime,
             MovieId = movie.MovieId
         };
     }

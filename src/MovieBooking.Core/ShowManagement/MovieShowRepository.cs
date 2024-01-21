@@ -4,7 +4,7 @@ using MongoDB.Driver;
 
 namespace MovieBooking.Core
 {
-    public class MovieShowRepository
+    public class MovieShowRepository : IMovieShowRepository
     {
         private readonly IMongoCollection<MovieShow> _movieShows;
 
@@ -14,7 +14,7 @@ namespace MovieBooking.Core
             _movieShows = database.GetCollection<MovieShow>(DBCollections.MOVIE_SHOWS);
         }
 
-        public async Task<IEnumerable<MovieShowDto>> GetMovieShowsByCinemaId(string cinemaId)
+        public async Task<IEnumerable<MovieShowResponse>> GetMovieShowsByCinemaId(string cinemaId)
         {
             var pipeline = new BsonDocument[]
             {
@@ -43,8 +43,13 @@ namespace MovieBooking.Core
                 })
             };
 
-            var movieShows = await _movieShows.Aggregate<MovieShowDto>(pipeline).ToListAsync();
+            var movieShows = await _movieShows.Aggregate<MovieShowResponse>(pipeline).ToListAsync();
             return movieShows;
+        }
+
+        public async Task SaveMovieShow(MovieShow movieShow)
+        {
+            await _movieShows.InsertOneAsync(movieShow);
         }
     }
 }
