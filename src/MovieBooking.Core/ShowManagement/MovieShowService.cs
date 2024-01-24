@@ -9,20 +9,22 @@ public class MovieShowService(IMovieShowRepository movieShowRepository, ICinemaR
 
     public async Task<CreateMovieShowResponse> CreateMovieShow(CreateMovieShowRequest request)
     {
-        var movieShow = await MovieShow.CreateMovieShow(request, _cinemaRepository, _movieRepository);
+        var movieShow = await MovieShow.CreateMovieShow(request, _cinemaRepository, _movieRepository,
+            _movieShowRepository);
         await _movieShowRepository.SaveMovieShow(movieShow);
         return new CreateMovieShowResponse
         {
-            ShowId = movieShow.ShowId,
-            CinemaId = movieShow.CinemaId,
-            Screen = movieShow.ScreenId,
-            MovieId = movieShow.MovieId,
-            ShowTime = movieShow.ShowTime
+            ShowId = movieShow.ShowId
         };
     }
 
     public async Task<IEnumerable<MovieShowResponse>> GetMovieShows(string cinemaId)
     {
         return await _movieShowRepository.GetMovieShowsByCinemaId(cinemaId);    
+    }
+
+    public async Task<IEnumerable<SearchMovieShowResponse>> SearchMovieShows(string searchValue)
+    {
+        return await _movieShowRepository.SearchMovieShows(searchValue);
     }
 }

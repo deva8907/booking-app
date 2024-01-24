@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MovieBooking.Core.ShowManagement;
 
 namespace MovieBooking.Core;
 
@@ -15,11 +16,7 @@ public class MovieShow
 
     [BsonElement]
     [BsonRequired]
-    public required string CinemaId { get; set; }
-
-    [BsonElement]
-    [BsonRequired]
-    public required string ScreenId { get; set; }
+    public required CinemaDetails Cinema { get; set; }
 
     [BsonElement]
     [BsonRequired]
@@ -27,10 +24,10 @@ public class MovieShow
 
     [BsonElement]
     [BsonRequired]
-    public required string MovieId { get; set; }
+    public required MovieDetails Movie { get; set; }
 
     public static async Task<MovieShow> CreateMovieShow(CreateMovieShowRequest request, ICinemaRepository cinemaRepository,
-        IMovieRepository movieRepository)
+        IMovieRepository movieRepository, IMovieShowRepository movieShowRepository)
     {
         var cinema = await cinemaRepository.GetCinemaById(request.CinemaId) ??
          throw new MovieShowException($"Cinema {request.CinemaId} does not exist");
@@ -41,14 +38,32 @@ public class MovieShow
         var movie = await movieRepository.GetMovieById(request.MovieId) ?? throw new MovieShowException($"Movie with id {request.MovieId} does not exist");
 
         if (request.ShowTime < DateTime.UtcNow)
-            throw new MovieShowException($"Show time {request.ShowTime} cannot be in the past");
+            throw new MovieShowException($"Cannot create shows for past time {request.ShowTime}");
+
+        await movieShowRepository.GetMovieShowsByCinemaId(cinema.CinemaId).ContinueWith(movieShows =>
+        {
+            if (movieShows.Result.Any(movieShow => movieShow.ShowTime == request.ShowTime))
+                throw new MovieShowException($"Show already exists for {request.ShowTime}");
+        });
+        
         return new MovieShow
         {
             ShowId = Guid.NewGuid().ToString(),
-            CinemaId = request.CinemaId,
-            ScreenId = screen.ScreenId,
+            Cinema = new CinemaDetails
+            {
+                CinemaId = cinema.CinemaId,
+                Name = cinema.Name,
+                ScreenId = screen.ScreenId,
+                Screen = screen.Name
+            },
             ShowTime = request.ShowTime,
-            MovieId = movie.MovieId
+            Movie = new MovieDetails
+            {
+                MovieId = movie.MovieId,
+                Name = movie.Name,
+                PlotSummary = movie.PlotSummary,
+                RuntimeMinutes = movie.RuntimeMinutes
+            }
         };
     }
 }

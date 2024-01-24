@@ -16,40 +16,45 @@ namespace MovieBooking.Core
 
         public async Task<IEnumerable<MovieShowResponse>> GetMovieShowsByCinemaId(string cinemaId)
         {
-            var pipeline = new BsonDocument[]
+            var movieShows = await _movieShows.Find(movieShow => movieShow.Cinema.CinemaId == cinemaId).ToListAsync();
+            return movieShows.Select(movieShow => new MovieShowResponse
             {
-                new("$match", new BsonDocument("CinemaId", cinemaId)),
-                new("$lookup", new BsonDocument
+                ShowId = movieShow.ShowId,
+                Cinema = movieShow.Cinema.Name,
+                Screen = movieShow.Cinema.Screen,
+                Movie = new MovieDto
                 {
-                    { "from", DBCollections.CINEMAS },
-                    { "localField", "CinemaId" },
-                    { "foreignField", "CinemaId" },
-                    { "as", "Cinema" }
-                }),
-                new("$unwind", "$Cinema"),
-                new("$lookup", new BsonDocument
-                {
-                    { "from", DBCollections.MOVIES },
-                    { "localField", "MovieId" },
-                    { "foreignField", "MovieId" },
-                    { "as", "Movie" }
-                }),
-                new("$unwind", "$Movie"),
-                new("$project", new BsonDocument
-                {
-                    { "ShowId", 1 },
-                    { "Cinema", "$Cinema" },
-                    { "Movie", "$Movie" }
-                })
-            };
-
-            var movieShows = await _movieShows.Aggregate<MovieShowResponse>(pipeline).ToListAsync();
-            return movieShows;
+                    Name = movieShow.Movie.Name,
+                    PlotSummary = movieShow.Movie.PlotSummary,
+                    RuntimeMinutes = movieShow.Movie.RuntimeMinutes
+                },
+                ShowTime = movieShow.ShowTime
+            });
         }
 
         public async Task SaveMovieShow(MovieShow movieShow)
         {
             await _movieShows.InsertOneAsync(movieShow);
+        }
+
+        public async Task<IEnumerable<SearchMovieShowResponse>> SearchMovieShows(string searchValue)
+        {
+            var filter = Builders<MovieShow>.Filter.Or(
+                Builders<MovieShow>.Filter.Regex(m => m.Cinema.Name, new BsonRegularExpression(searchValue, "i")),
+                Builders<MovieShow>.Filter.Regex(m => m.Movie.Name, new BsonRegularExpression(searchValue, "i")));
+            var movieShows = await _movieShows.Find(filter).ToListAsync();
+            return new List<SearchMovieShowResponse>(movieShows.Select(movieShow => new SearchMovieShowResponse
+            {
+                Cinema = movieShow.Cinema.Name,
+                Screen = movieShow.Cinema.Screen,
+                Movie = new MovieDto
+                {
+                    Name = movieShow.Movie.Name,
+                    PlotSummary = movieShow.Movie.PlotSummary,
+                    RuntimeMinutes = movieShow.Movie.RuntimeMinutes
+                },
+                ShowTime = movieShow.ShowTime
+            }));
         }
     }
 }
