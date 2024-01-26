@@ -1,4 +1,5 @@
 ﻿
+
 namespace MovieBooking.Core;
 
 public class MovieShowService(IMovieShowRepository movieShowRepository, ICinemaRepository cinemaRepository, IMovieRepository movieRepository)
@@ -16,6 +17,12 @@ public class MovieShowService(IMovieShowRepository movieShowRepository, ICinemaR
         {
             ShowId = movieShow.ShowId
         };
+    }
+
+    public async Task DeleteMovieShow(string showId)
+    {
+        var _ = await _movieShowRepository.GetMovieShowById(showId) ?? throw new MovieShowException($"Movie show with id {showId} does not exist");
+        await _movieShowRepository.DeleteMovieShow(showId);
     }
 
     public async Task<IEnumerable<MovieShowResponse>> GetMovieShows(string cinemaId)

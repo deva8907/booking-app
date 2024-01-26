@@ -14,6 +14,16 @@ namespace MovieBooking.Core
             _movieShows = database.GetCollection<MovieShow>(DBCollections.MOVIE_SHOWS);
         }
 
+        public Task DeleteMovieShow(string showId)
+        {
+            return _movieShows.DeleteOneAsync(movieShow => movieShow.ShowId == showId);
+        }
+
+        public Task<MovieShow> GetMovieShowById(string showId)
+        {
+            return _movieShows.Find(movieShow => movieShow.ShowId == showId).FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<MovieShowResponse>> GetMovieShowsByCinemaId(string cinemaId)
         {
             var movieShows = await _movieShows.Find(movieShow => movieShow.Cinema.CinemaId == cinemaId).ToListAsync();
@@ -39,9 +49,11 @@ namespace MovieBooking.Core
 
         public async Task<IEnumerable<SearchMovieShowResponse>> SearchMovieShows(string searchValue)
         {
-            var filter = Builders<MovieShow>.Filter.Or(
+            var filterByShowTime = Builders<MovieShow>.Filter.Gte(m => m.ShowTime, DateTimeOffset.UtcNow);
+            var filterBySearchValue = Builders<MovieShow>.Filter.Or(
                 Builders<MovieShow>.Filter.Regex(m => m.Cinema.Name, new BsonRegularExpression(searchValue, "i")),
                 Builders<MovieShow>.Filter.Regex(m => m.Movie.Name, new BsonRegularExpression(searchValue, "i")));
+            var filter = Builders<MovieShow>.Filter.And(filterByShowTime, filterBySearchValue);
             var movieShows = await _movieShows.Find(filter).ToListAsync();
             return new List<SearchMovieShowResponse>(movieShows.Select(movieShow => new SearchMovieShowResponse
             {

@@ -34,4 +34,24 @@ public class MovieShowManagementController(MovieShowService movieShowService, IL
             return StatusCode(500, "Error while creating movie show, please try again later");
         }
     }
+
+    [HttpDelete("cinemas/movie-shows/{showId}")]
+    public async Task<IActionResult> DeleteMovieShow(string showId)
+    {
+        try
+        {
+            await _movieShowService.DeleteMovieShow(showId);
+            return Ok();
+        }
+        catch (MovieShowException mex)
+        {
+            _logger.LogError("Bad request: {Message}", mex);
+            return BadRequest(mex.Message);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Internal server error: {Error}", ex);
+            return StatusCode(500, "Error while deleting movie show, please try again later");
+        }
+    }
 }
