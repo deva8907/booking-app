@@ -1,17 +1,10 @@
-﻿using Microsoft.Extensions.Options;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 
 namespace MovieBooking.Core
 {
-    public class CinemaRepository : ICinemaRepository
+    public class CinemaRepository(IMongoDatabase database) : ICinemaRepository
     {
-        private readonly IMongoCollection<Cinema> _cinemas;
-
-        public CinemaRepository(IMongoClient client, IOptions<MongoDbSettings> options)
-        {
-            var database = client.GetDatabase(options.Value.Database);
-            _cinemas = database.GetCollection<Cinema>(DBCollections.CINEMAS);
-        }
+        private readonly IMongoCollection<Cinema> _cinemas = database.GetCollection<Cinema>(DBCollections.CINEMAS);
 
         public async Task<Cinema> GetCinemaById(string cinemaId)
         {

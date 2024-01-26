@@ -1,18 +1,11 @@
-﻿using Microsoft.Extensions.Options;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace MovieBooking.Core
 {
-    public class MovieShowRepository : IMovieShowRepository
+    public class MovieShowRepository(IMongoDatabase database) : IMovieShowRepository
     {
-        private readonly IMongoCollection<MovieShow> _movieShows;
-
-        public MovieShowRepository(IMongoClient client, IOptions<MongoDbSettings> options)
-        {
-            var database = client.GetDatabase(options.Value.Database);
-            _movieShows = database.GetCollection<MovieShow>(DBCollections.MOVIE_SHOWS);
-        }
+        private readonly IMongoCollection<MovieShow> _movieShows = database.GetCollection<MovieShow>(DBCollections.MOVIE_SHOWS);
 
         public Task DeleteMovieShow(string showId)
         {

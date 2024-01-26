@@ -1,11 +1,10 @@
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using MovieBooking.Core;
 
-class DatabaseSeeder(IMongoClient mongoClient, IOptions<MongoDbSettings> mongoDbSettings) : BackgroundService
+class DatabaseMigration(IMongoDatabase database) : BackgroundService
 {
-    private readonly IMongoDatabase _database = mongoClient.GetDatabase(mongoDbSettings.Value.Database);
+    private readonly IMongoDatabase _database = database;
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
