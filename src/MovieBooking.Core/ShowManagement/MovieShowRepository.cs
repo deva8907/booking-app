@@ -24,6 +24,7 @@ namespace MovieBooking.Core
             {
                 ShowId = movieShow.ShowId,
                 Cinema = movieShow.Cinema.Name,
+                City = movieShow.Cinema.City,
                 Screen = movieShow.Cinema.Screen,
                 Movie = new MovieDto
                 {
@@ -51,6 +52,7 @@ namespace MovieBooking.Core
             return new List<SearchMovieShowResponse>(movieShows.Select(movieShow => new SearchMovieShowResponse
             {
                 Cinema = movieShow.Cinema.Name,
+                City = movieShow.Cinema.City,
                 Screen = movieShow.Cinema.Screen,
                 Movie = new MovieDto
                 {

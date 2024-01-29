@@ -26,13 +26,13 @@ public class MovieShow
     [BsonRequired]
     public required MovieDetails Movie { get; set; }
 
-    public static async Task<MovieShow> CreateMovieShow(CreateMovieShowRequest request, ICinemaRepository cinemaRepository,
+    public static async Task<MovieShow> CreateMovieShow(string cinemaId, CreateMovieShowRequest request, ICinemaRepository cinemaRepository,
         IMovieRepository movieRepository, IMovieShowRepository movieShowRepository)
     {
-        var cinema = await cinemaRepository.GetCinemaById(request.CinemaId) ??
-         throw new MovieShowException($"Cinema {request.CinemaId} does not exist");
+        var cinema = await cinemaRepository.GetCinemaById(cinemaId) ??
+         throw new MovieShowException($"Cinema {cinemaId} does not exist");
 
-        var screen = cinema.Screens.FirstOrDefault(screen => screen.Name == request.Screen) ??
+        var screen = cinema.Screens.FirstOrDefault(screen => screen.Name == request.Screen || screen.ScreenId == request.Screen) ??
          throw new MovieShowException($"Screen with {request.Screen} does not exist in cinema {cinema.Name}");
 
         var movie = await movieRepository.GetMovieById(request.MovieId) ?? throw new MovieShowException($"Movie with id {request.MovieId} does not exist");
@@ -54,7 +54,8 @@ public class MovieShow
                 CinemaId = cinema.CinemaId,
                 Name = cinema.Name,
                 ScreenId = screen.ScreenId,
-                Screen = screen.Name
+                Screen = screen.Name,
+                City = cinema.City
             },
             ShowTime = request.ShowTime,
             Movie = new MovieDetails

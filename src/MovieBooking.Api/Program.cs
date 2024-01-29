@@ -1,8 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using MovieBooking.Api;
 using Serilog;
 
-namespace Payment.Api
+namespace MovieBooking.Api
 {
     [ExcludeFromCodeCoverage]
     public static class Program
@@ -10,18 +9,18 @@ namespace Payment.Api
         public static int Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateBootstrapLogger();
-            Log.Information("Payment API Starting...");
+            Log.Information("Movie booking api Starting...");
 
             try
             {
                 CreateHostBuilder(args).Build()
                     .Run();
-                Log.Information("Payment API Stopped...");
+                Log.Information("Movie booking api Stopped...");
                 return 0;
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "An unhandled exception occured during Payment API bootstrapping....");
+                Log.Fatal(ex, "An unhandled exception occured during Movie booking api bootstrapping....");
                 return 1;
             }
             finally
@@ -39,7 +38,8 @@ namespace Payment.Api
                     .ReadFrom.Configuration(hostingContext.Configuration)
                     .Enrich.FromLogContext()
                     .Enrich.WithProperty("Environment", environment)
-                    .WriteTo.Console();
+                    .WriteTo.Console()
+                    .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day);
 
                 Log.Logger = logConfiguration.CreateLogger();
             });

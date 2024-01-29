@@ -12,6 +12,10 @@ namespace MovieBooking.Core.ShowManagement
         [BsonElement]
         [BsonRequired]
         public required string Name { get; set; }
+        
+        [BsonElement]
+        [BsonRequired]
+        public required string City { get; set; }
 
         [BsonElement]
         [BsonRequired]

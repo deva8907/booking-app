@@ -12,6 +12,7 @@
     <PackageReference Include="serilog.extensions.hosting" Version="8.0.0" />
     <PackageReference Include="serilog.settings.configuration" Version="8.0.0" />
     <PackageReference Include="serilog.sinks.console" Version="5.0.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 

@@ -9,4 +9,22 @@ services:
       - "0.0.0.0:27017:27017"
     environment:
       MONGO_INITDB_DATABASE: movieBookingApp
+    networks:
+      - movieBookingNetwork
 
+  booking-app:
+    image: movie-booking-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5011:5000"
+    networks:
+      - movieBookingNetwork
+    depends_on:
+      - mongo
+    environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:5000
+
+networks:
+  movieBookingNetwork:

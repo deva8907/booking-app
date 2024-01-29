@@ -51,10 +51,10 @@ class DatabaseMigration(IMongoDatabase database) : BackgroundService
     {
         List<Movie> movies =
         [
-            new() { Name = "The Shawshank Redemption", RuntimeMinutes = 142, PlotSummary = "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", MovieId = Guid.NewGuid().ToString() },
-            new() { Name = "The Godfather", RuntimeMinutes = 175, PlotSummary = "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.", MovieId = Guid.NewGuid().ToString() },
-            new() { Name = "The Dark Knight", RuntimeMinutes = 152, PlotSummary = "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", MovieId = Guid.NewGuid().ToString() },
-            new() { Name = "The Godfather: Part II", RuntimeMinutes = 202, PlotSummary = "The early life and career of Vito Corleone in 1920s New York City is portrayed, while his son, Michael, expands and tightens his grip on the family crime syndicate.", MovieId = Guid.NewGuid().ToString() },
+            new() { Name = "The Shawshank Redemption", RuntimeMinutes = 142, PlotSummary = "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", MovieId = "SHAWSHANK-REDEMPTION" },
+            new() { Name = "The Godfather", RuntimeMinutes = 175, PlotSummary = "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.", MovieId = "GODFATHER-I" },
+            new() { Name = "The Dark Knight", RuntimeMinutes = 152, PlotSummary = "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.", MovieId = "DARK-KNIGHT" },
+            new() { Name = "The Godfather: Part II", RuntimeMinutes = 202, PlotSummary = "The early life and career of Vito Corleone in 1920s New York City is portrayed, while his son, Michael, expands and tightens his grip on the family crime syndicate.", MovieId = "GODFATHER-II" },
         ];
         var movieCollection = _database.GetCollection<Movie>(DBCollections.MOVIES);
         var existingMovies = movieCollection.Find(Builders<Movie>.Filter.Empty).ToList();
@@ -71,26 +71,26 @@ class DatabaseMigration(IMongoDatabase database) : BackgroundService
     {
         List<Cinema> cinemas =
         [
-            new() { Name = "PVR", City = "Chennai", CinemaId = Guid.NewGuid().ToString(),
+            new() { Name = "PVR", City = "Chennai", CinemaId = "PVR-CHE",
                 Screens =
                 [
-                    new() { Name = "Screen 1", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
-                    new() { Name = "Screen 2", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
-                    new() { Name = "Screen 3", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
+                    new() { Name = "Screen 1", TotalSeats = 100, ScreenId = "PVR-CHE-SCREEN-I" },
+                    new() { Name = "Screen 2", TotalSeats = 100, ScreenId = "PVR-CHE-SCREEN-II" },
+                    new() { Name = "Screen 3", TotalSeats = 100, ScreenId = "PVR-CHE-SCREEN-III" },
                 ] },
-            new() { Name = "PVR", City = "Mumbai", CinemaId = Guid.NewGuid().ToString(),
+            new() { Name = "PVR", City = "Mumbai", CinemaId = "PVR-MUM",
                 Screens =
                 [
-                    new() { Name = "Screen 1", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
-                    new() { Name = "Screen 2", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
-                    new() { Name = "Screen 3", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
+                    new() { Name = "Screen 1", TotalSeats = 100, ScreenId = "PVR-MUM-SCREEN-I" },
+                    new() { Name = "Screen 2", TotalSeats = 100, ScreenId = "PVR-MUM-SCREEN-II" },
+                    new() { Name = "Screen 3", TotalSeats = 100, ScreenId = "PVR-MUM-SCREEN-III" },
                 ] },
-            new() { Name = "PVR", City = "Bangalore", CinemaId = Guid.NewGuid().ToString(),
+            new() { Name = "PVR", City = "Bangalore", CinemaId = "PVR-BLR",
                 Screens =
                 [
-                    new() { Name = "Screen 1", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
-                    new() { Name = "Screen 2", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
-                    new() { Name = "Screen 3", TotalSeats = 100, ScreenId = Guid.NewGuid().ToString() },
+                    new() { Name = "Screen 1", TotalSeats = 100, ScreenId = "PVR-BLR-SCREEN-I" },
+                    new() { Name = "Screen 2", TotalSeats = 100, ScreenId = "PVR-BLR-SCREEN-II" },
+                    new() { Name = "Screen 3", TotalSeats = 100, ScreenId = "PVR-BLR-SCREEN-III" },
                 ] }
         ];
         var cinemaCollection = _database.GetCollection<Cinema>(DBCollections.CINEMAS);
@@ -108,9 +108,9 @@ class DatabaseMigration(IMongoDatabase database) : BackgroundService
     {
         List<City> cities =
         [
-            new() { Name = "Chennai", CityId = Guid.NewGuid().ToString() },
-            new() { Name = "Mumbai", CityId = Guid.NewGuid().ToString() },
-            new () { Name = "Bangalore", CityId = Guid.NewGuid().ToString()}
+            new() { Name = "Chennai", CityId = "CHN" },
+            new() { Name = "Mumbai", CityId = "MUM" },
+            new () { Name = "Bangalore", CityId = "BLR"}
         ];
         var cityCollection = _database.GetCollection<City>(DBCollections.CITIES);
         var existingCities = cityCollection.Find(Builders<City>.Filter.Empty).ToList();

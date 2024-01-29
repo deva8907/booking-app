@@ -3,6 +3,7 @@
 public record SearchMovieShowResponse
 {
     public required string Cinema { get; set; }
+    public required string City { get; set; }
 
     public required string Screen { get; set; }
 

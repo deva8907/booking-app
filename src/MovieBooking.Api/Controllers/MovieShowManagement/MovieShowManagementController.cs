@@ -19,8 +19,7 @@ public class MovieShowManagementController(MovieShowService movieShowService, IL
     {
         try
         {
-            movieShowRequest.CinemaId ??= cinemaId;
-            var response = await _movieShowService.CreateMovieShow(movieShowRequest);
+            var response = await _movieShowService.CreateMovieShow(cinemaId, movieShowRequest);
             return Ok(response);
         }
         catch (MovieShowException mex)
