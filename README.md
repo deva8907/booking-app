@@ -25,7 +25,7 @@ git clone https://github.com/deva8907/booking-app.git
 2. Run dockers containers
 
 ```
-docker-compose up --build
+docker-compose up --build -d
 ```
 
 3. Access the application at http://localhost:5011
@@ -51,7 +51,7 @@ Business logic like validations and creation of entity is pushed into the Domain
 ## Usage
 
 1. Follow the [Installation](#installation) section to start the application
-2. Import the postman collection- movie-booking-app-postman-collection.json in the root directory. 
+2. Import the postman collection- booking-app.postman_collection.json in the root directory. 
 3. Show management folder in the collection has endpoints to manage shows for admin users
 4. System folder has only the GET endpoints for system data like Cinema, Movie and City
 5. Movie booking folder currently only has Search show endpoint. Future scope would be to add endpoint for booking a show
