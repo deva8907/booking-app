@@ -53,6 +53,10 @@ Business logic like validations and creation of entity is pushed into the Domain
 3. Show management folder in the collection has endpoints to manage shows for admin users
 4. System folder has only the GET endpoints for system data like Cinema, Movie and City
 5. Movie booking folder currently only has Search show endpoint. Future scope would be to add endpoint for booking a show
+6. For debugging the application, start the mongodb container dependency using the docker-compose.debug.yaml file as shown below. Once the mongodb container is started then run/debug the application from the IDE
+```
+docker-compose -f docker-compose.debug.yaml up -d
+```
 
 ## To do
 
