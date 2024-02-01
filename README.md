@@ -11,8 +11,6 @@ This is a movie booking application built with .NET Core and MongoDB.
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Installation
 
